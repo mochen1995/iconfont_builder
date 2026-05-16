@@ -1,3 +1,11 @@
+## [1.0.7] - 适配 Flutter 3.41.7 / Dart 3，升级依赖与空安全
+
+- SDK 约束升级为 `>=3.0.0 <4.0.0`
+- 升级依赖：`args ^2.5.0`、`lpinyin ^2.0.3`
+- 适配空安全（Null Safety）：顶层 `args` 改为 `late`、局部 `fileString` 初始化、`group(0)` 处理可空、`nameSet` 改为可空集合
+- 生成代码同步适配空安全：`Icon` 工厂方法的 `color/key/size/textDirection` 参数改为可空类型
+- 移除 pubspec 中已废弃的 `author` 字段，保留原有逻辑使用方式不变
+
 ## [1.0.6] - 忽略一些关键字
 
 ## [1.0.4] - 更新说明

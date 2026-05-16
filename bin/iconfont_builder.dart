@@ -6,12 +6,12 @@ import 'dart:io';
 import 'package:args/args.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-ArgResults args;
+late ArgResults args;
 
 
 void main(List<String> arguments) {
 // 创建ArgParser的实例，同时指定需要输入的参数
-  final ArgParser argParser = new ArgParser()
+  final ArgParser argParser = ArgParser()
     ..addOption('class', help: "Iconfont class name", defaultsTo: 'Iconfont')
     ..addOption('family', help: "font's family name", defaultsTo: 'Iconfont')
     ..addOption('from', help: "from iconfont dir path")
@@ -24,7 +24,7 @@ void main(List<String> arguments) {
 
   args = argParser.parse(arguments);
 
-  if (args['help']) {
+  if (args['help'] as bool) {
     print("""
 ---- HELP ----
 ${argParser.usage}
@@ -110,7 +110,7 @@ List<String> symbols = [
 
 void logic() {
   final fromHtmlPath = pwd('${args['from']}/demo_index.html');
-  final toDartPath = pwd(args['to']);
+  final toDartPath = pwd(args['to'] as String);
 
   if (args['focus'] != 'true' && File(toDartPath).existsSync()) {
     print('[Error]');
@@ -134,13 +134,13 @@ void logic() {
 
   List<String> names = [];
   List<String> tips = [];
-  Set<String> nameSet = Set();
+  Set<String> nameSet = <String>{};
   List<String> values = [];
   var valuesMatches = valueReg.allMatches(html);
   var namesMatches = nameReg.allMatches(html);
 
   for (var n in valuesMatches) {
-    String v = n.group(0);
+    String v = n.group(0) ?? '';
     v = v.replaceFirst('<span class="icon iconfont">&#', '0');
     v = v.replaceFirst(';</span>', '');
     values.add(v);
@@ -151,7 +151,7 @@ void logic() {
     if (names.length == values.length) {
       break;
     }
-    String v = n.group(0);
+    String v = n.group(0) ?? '';
 
     v = v.replaceFirst('<div class="name">', '');
     v = v.replaceFirst('</div>', '');
@@ -191,10 +191,10 @@ void logic() {
     names.add(v);
     nameSet.add(v);
   }
-  nameSet = null;
+  nameSet.clear();
 
   String icons = '';
-  String fileString;
+  String fileString = '';
   for (var i = 0; i < values.length; i++) {
     if (args['type'] == 'Icon') {
       icons += icon(names[i], values[i], tips[i]);
@@ -240,7 +240,7 @@ class ${args['class']} {
 String icon(String name, String value, String tip) {
   return '''
   // iconName: $tip
-  static $name({Color color, Key key, double size, TextDirection textDirection}) {
+  static $name({Color? color, Key? key, double? size, TextDirection? textDirection}) {
     return Icon(makeIcon($value), color: color, key: key, size: size, textDirection: textDirection);
   }
 
