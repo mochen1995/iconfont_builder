@@ -8,6 +8,7 @@ import 'package:lpinyin/lpinyin.dart';
 
 ArgResults args;
 
+
 void main(List<String> arguments) {
 // 创建ArgParser的实例，同时指定需要输入的参数
   final ArgParser argParser = new ArgParser()
