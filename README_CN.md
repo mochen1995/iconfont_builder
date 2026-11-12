@@ -48,6 +48,12 @@ $ brew install dart
 $ pub global activate iconfont_builder
 ```
 
+安装本地 iconfont_builder:
+
+```sh
+$ dart pub global activate --source path .
+```
+
 ## 在 Flutter 中使用 Iconfont
 
 使用 iconfont_builder 编译 Iconfont.dart 文件
@@ -129,6 +135,16 @@ fonts:
     fonts:
       - asset: fonts/iconfont.ttf
 ```
+
+### 自定义字体包名
+
+当字体资源来自其他 package 时，`IconData` 需要 `fontPackage` 才能定位到字体，添加 `--package 包名` 即可：
+
+```sh
+$ iconfont_builder --from ./fonts --to ./lib/Iconfont.dart --package OtherIconPackage
+```
+
+如果没有指定 `--package`，生成的 `IconData` 中不会写入 `fontPackage`。
 
 ### 使用 Icon 组件模式
 

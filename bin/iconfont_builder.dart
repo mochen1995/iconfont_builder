@@ -16,11 +16,10 @@ void main(List<String> arguments) {
     ..addOption('family', help: "font's family name", defaultsTo: 'Iconfont')
     ..addOption('from', help: "from iconfont dir path")
     ..addOption('to', help: "to .dart file path")
+    ..addOption('package', help: "IconData's fontPackage, ignore if not specified")
     ..addOption('focus', abbr: 'f', help: "Overlay file")
-    ..addOption('type',
-        abbr: 't', defaultsTo: 'IconData', help: "Use other type")
-    ..addFlag('help',
-        abbr: 'h', negatable: false, help: "Displays this help information.");
+    ..addOption('type', abbr: 't', defaultsTo: 'IconData', help: "Use other type")
+    ..addFlag('help', abbr: 'h', negatable: false, help: "Displays this help information.");
 
   args = argParser.parse(arguments);
 
@@ -209,6 +208,15 @@ void logic() {
   print('Done! The file: $toDartPath');
 }
 
+/// --package 未指定时返回空字符串, 此时不设置 fontPackage
+String fontPackageLine() {
+  final package = args['package'] as String?;
+  if (package == null || package.isEmpty) {
+    return '';
+  }
+  return "fontPackage: '$package',\n    ";
+}
+
 String fileIcon(String icons) {
   return '''
 import 'package:flutter/material.dart';
@@ -217,7 +225,7 @@ IconData makeIcon(int value) {
   return IconData(
     value,
     fontFamily: '${args['family']}',
-    matchTextDirection: true,
+    ${fontPackageLine()}matchTextDirection: true,
   );
 }
 
@@ -253,7 +261,7 @@ String iconData(String name, String value, String tip) {
   static const $name = IconData(
     $value,
     fontFamily: '${args['family']}',
-    matchTextDirection: true,
+    ${fontPackageLine()}matchTextDirection: true,
   );
 
 ''';

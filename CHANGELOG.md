@@ -1,3 +1,7 @@
+## [Unreleased]
+
+- 添加 `--package` 用于设置 `IconData` 的 `fontPackage`，未指定时不写入 `fontPackage`
+
 ## [1.0.7] - 适配 Flutter 3.41.7 / Dart 3，升级依赖与空安全
 
 - SDK 约束升级为 `>=3.0.0 <4.0.0`

@@ -130,6 +130,16 @@ fonts:
       - asset: fonts/iconfont.ttf
 ```
 
+### Custom font package
+
+When the font asset comes from another package, `IconData` needs a `fontPackage` to locate it. Add `--package <package-name>` to set it:
+
+```sh
+$ iconfont_builder --from ./fonts --to ./lib/Iconfont.dart --package OtherIconPackage
+```
+
+If `--package` is not specified, `fontPackage` is not written into the generated `IconData` at all.
+
 ### Use Icon Widget pattern
 
 The icondata object is compiled by default, which is consistent with the habit of using the default icons of flutter. If you need to use it more briefly, you can directly compile it into an icon widget.
